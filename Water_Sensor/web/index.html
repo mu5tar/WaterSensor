@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    
+    <title>Water Sensor Readings</title>
+</head>
+<body>
+    <div class="sensor-readings">
+        <h1>Water Sensor Readings</h1>
+        <div id="balance">Balance: </div>
+        <div id="totalLiters">Total Liters: </div>
+        <div id="totalCubicMeters">Total Cubic Meters: </div>
+        <div id="remainingCubicMeters">Remaining Cubic Meters: </div>
+    </div>
+
+  <script>
+    // Initialize Firebase
+   const firebaseConfig = {
+  // Your Firebase configuration object
+    apiKey: "AIzaSyDvw9KCqz1IsNQ7FwkQvSPl_jbSg_OPGCY",
+    authDomain: "waterflowsensor-f36b6.firebaseapp.com",
+    databaseURL: "https://waterflowsensor-f36b6-default-rtdb.firebaseio.com",
+    projectId: "waterflowsensor-f36b6",
+    storageBucket: "waterflowsensor-f36b6.appspot.com",
+    messagingSenderId: "600221830098",
+    appId: "1:600221830098:web:bddceb8c4257f242cf560b",
+    measurementId: "G-F0MMGWWL0B"
+};
+firebase.initializeApp(firebaseConfig);
+
+    // Get the Firebase database
+var database = firebase.database();
+// Reference to the water sensor readings
+const waterSensorRef = database.ref("/user");
+
+// Update the readings on the web page
+waterSensorRef.on('value', (snapshot) => {
+    const data = snapshot.val();
+	console.log(data);
+
+    // Update HTML elements with sensor readings
+    document.getElementById('balance').innerText = `Balance: ${data.Balance}`;
+    document.getElementById('totalLiters').innerText = `Total Liters: ${data.TotalLiters}`;
+    document.getElementById('totalCubicMeters').innerText = `Total Cubic Meters: ${data.TotalCubicMeters}`;
+    document.getElementById('remainingCubicMeters').innerText = `Remaining Cubic Meters: ${data.RemainingCubicMeters}`;
+
+    // Add animation logic here (e.g., using CSS animations or JavaScript animations)
+});
+  </script>
+</body>
+</html>
